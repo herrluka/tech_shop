@@ -1,23 +1,41 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand to="/error">NavBar</b-navbar-brand>
+      <b-navbar-brand to="/">Tech Shop</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav v-if="!user">
+          <b-nav-item href="#">Početna</b-nav-item>
+        </b-navbar-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
+          <b-nav-item href="#">Katalog</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav v-if="user !== null && user.role==='employee'">
+          <b-nav-item href="#">Zaposleni</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav v-if="user !== null && user.role==='employee'">
+          <b-nav-item href="#">Korisnici</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav v-if="user !== null && user.role==='employee'">
+          <b-nav-item href="#">Porudžbine</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav v-if="user !== null && user.role==='employee'">
+          <b-nav-item href="#">Dostavljači</b-nav-item>
         </b-navbar-nav>
 
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown right>
-            <template #button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
+        <b-navbar-nav class="ml-auto" v-if="user">
+          <b-nav-item v-if="user.role==='customer'" href="#">Moje porudžbine</b-nav-item>
+          <b-nav-item v-if="user.role==='customer'">
+            <font-awesome-icon icon="shopping-cart" :style="{ color: 'green', height: '25px', width: '25px' }"/>
+          </b-nav-item>
+          <b-nav-text class="ml-lg-2 ml-xl-2 mr-lg-2 mr-xl-2">Zdravo, {{user.name}}</b-nav-text>
+          <b-nav-item @click="logout()">Odjavite se</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto" v-if="!user">
+            <b-nav-item  to="/register">Registrujte se</b-nav-item>
+            <b-nav-item to="/login">Ulogujte se</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -26,6 +44,21 @@
 
 <script>
   export default {
+    data() {
+      return {
+        user: this.$store.state.user
+      }
+    },
+    watch: {
+      '$store.state.user': function() {
+       this.user = this.$store.state.user;
+      }
+    },
+    methods: {
+      logout() {
+        this.$store.commit('setUser', null);
+      }
+    }
   }
 </script>
 
