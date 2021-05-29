@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as fb from './firebase';
 import router from "./router/router";
+import productsMock from "./mocks/full-cart-mock"
 
 Vue.use(Vuex);
 
@@ -10,6 +11,7 @@ export const store = new Vuex.Store({
     user: null,
     deliverers: [],
     customers: [],
+    productsInCart: productsMock,
   },
   mutations: {
     setUser(state, val) {
@@ -17,6 +19,9 @@ export const store = new Vuex.Store({
     },
     setDeliverers(state, val) {
       state.deliverers = val;
+    },
+    updateCart(state, val) {
+      state.productsInCart = val;
     }
   },
   actions: {
@@ -38,6 +43,8 @@ export const store = new Vuex.Store({
         surname: form.surname,
         email: form.email,
         password: form.password,
+        address: form.address,
+        phoneNumber: form.phoneNumber,
         role: 'customer',
       });
       dispatch('fetchUser', user);
@@ -58,7 +65,7 @@ export const store = new Vuex.Store({
         console.log(error)
       }
     },
-    async deleteDeliverer({}, id){ 
+    async deleteDeliverer({}, id){
       try{
         await fb.deliverersCollection.doc(id).delete();
         alert('Resurs je uspešno obrisan!')
@@ -103,10 +110,10 @@ export const store = new Vuex.Store({
        console.log(error + " error")
       }
   },
-  async deleteCustomer({}, id){  console.log("id "  + id) 
+  async deleteCustomer({}, id){  console.log("id "  + id)
       try{
         await fb.customersCollection.doc(id).delete();
-        alert('Resurs je uspešno obrisan!')           
+        alert('Resurs je uspešno obrisan!')
       }
       catch(error){
         console.log(error + " error")
