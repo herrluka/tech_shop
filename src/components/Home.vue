@@ -1,15 +1,13 @@
 <template>
-  <div class="main-content">
-    <!--    <img src="../assets/shopping-cart-background.png"/>-->
-    <div class="container">
-      <h1 class="font-weight-bold">Vaša korpa</h1>
-      <div v-for="product in productsInCart">
-        <p>{{product.productName}}</p>
+  <div class="d-flex flex-column flex-lg-row flex-xl-row flex-sm-column align-content-around justify-content-around">
+    <div class="d-flex flex-column flex-lg-column flex-xl-column flex-sm-column justify-content-center align-content-center">
+      <h1 class="text-white display-1">Tech shop</h1>
+      <h3 class="h1 font-weight-bold" style="color: forestgreen">Mesto gde inovacije ne prestaju</h3>
+      <div class="text-center">
+        <router-link to="/products" class="btn btn-warning text-decoration-none"><b class="h3 font-weight-bold text-white">Katalog</b></router-link>
       </div>
-      <button type="button" @click="addToChart">Dodaj</button>
-      <button type="button" @click="checkState">Stampaj</button>
-      <button type="button" @click="removeFromCart">Ukoli</button>
     </div>
+    <img src="../assets/shopping-cart-background.png"/>
   </div>
 </template>
 
@@ -43,14 +41,4 @@
 </script>
 
 <style scoped>
-
-  .main-content {
-    padding-top: 20px;
-  }
-
-  .main-content::before {
-    content: url("../assets/shopping-cart-background.png");
-    position: absolute;
-    right: 0;
-  }
 </style>

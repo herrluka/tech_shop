@@ -3,7 +3,7 @@
     <b-icon-emoji-frown class="h1"></b-icon-emoji-frown>
     <h1>Page not found</h1>
     <div>
-      <router-link to="/" class="btn btn-primary">Back to home</router-link>
+      <router-link to="/" class="btn btn-primary text-decoration-none text-white">Back to home</router-link>
     </div>
   </div>
 </template>

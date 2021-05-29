@@ -1,9 +1,8 @@
 <template>
   <div class="centered-container">
-    <md-content class="md-elevation-3 max-height-80">
+    <md-content class="md-elevation-3 max-height-90">
       <div class="title">
-        <h1>Tech Shop</h1>
-        <div class="md-title">Registracija</div>
+        <h3>Registracija</h3>
       </div>
 
       <div class="form">
@@ -158,7 +157,7 @@
   }
 
   .max-height-90 {
-    max-height: 90vh;
-    overflow: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 </style>
