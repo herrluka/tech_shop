@@ -6,8 +6,8 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav v-if="!user">
-          <b-nav-item href="#">Početna</b-nav-item>
+        <b-navbar-nav>
+          <b-nav-item to="/">Početna</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav>
           <b-nav-item href="#">Katalog</b-nav-item>

@@ -86,6 +86,9 @@
             </div>
             <button class="btn btn-success w-75">PORUČI</button>
           </div>
+          <div class="loader-container" v-if="loading">
+            <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
+          </div>
         </div>
       </div>
     </div>
@@ -98,6 +101,7 @@
           return {
             productsInCart: this.$store.state.productsInCart,
             user: this.$store.state.user,
+            loading: false,
           }
         },
         computed: {
@@ -196,6 +200,20 @@
   position: absolute;
   width: 100%;
   text-align: center;
+}
+
+.loader-container {
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 600px) {
