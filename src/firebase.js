@@ -18,10 +18,14 @@ const db = firebase.firestore();
 const storage = firebase.storage().ref();
 const auth = firebase.auth();
 const usersCollection = db.collection('users');
+const deliverersCollection = db.collection('deliverers')
+const customersCollection = db.collection('customers')
 
 export {
   db,
   storage,
   auth,
-  usersCollection
+  usersCollection,
+  deliverersCollection,
+  customersCollection
 }

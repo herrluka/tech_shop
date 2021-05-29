@@ -8,10 +8,15 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     user: null,
+    deliverers: [],
+    customers: [],
   },
   mutations: {
     setUser(state, val) {
       state.user = val;
+    },
+    setDeliverers(state, val) {
+      state.deliverers = val;
     }
   },
   actions: {
@@ -36,6 +41,98 @@ export const store = new Vuex.Store({
         role: 'customer',
       });
       dispatch('fetchUser', user);
+    },
+    async getAllDeliverers({state}){
+      let deliverersRef = fb.deliverersCollection;
+      try{
+        let allDeliverers = await deliverersRef.get();
+        state.deliverers = [];
+        allDeliverers.forEach(doc =>{ // prosledjuje joj se callback f-ja koja ce vraitti neki item
+        const singleDeliverer = doc.data(); // data je ceo objekat
+        singleDeliverer["id"] = doc.id;
+        state.deliverers.push(singleDeliverer);
+        console.log(singleDeliverer);
+      })
+      }
+      catch(error){
+        console.log(error)
+      }
+    },
+    async deleteDeliverer({}, id){ 
+      try{
+        await fb.deliverersCollection.doc(id).delete();
+        alert('Resurs je uspešno obrisan!')
+      }
+      catch(error){
+        console.log(error + " error")
+      }
+    },
+    async updateDeliverer({}, itemForUpdate){
+      try{
+        await fb.deliverersCollection.doc(itemForUpdate.id).update({
+        companyName: itemForUpdate.companyName,
+        address : itemForUpdate.address,
+        contact : itemForUpdate.contact
+        })
+      }
+      catch(error){
+        console.log(error)
+      }
+    },
+    async insertDeliverer({commit, state}, deliverer){
+      const newDeliverer = {
+      companyName : deliverer.companyName,
+      address : deliverer.address,
+      contact : deliverer.contact
+      }
+      const data = await fb.deliverersCollection.add(newDeliverer)
+  },
+  async getAllCustomers({state}){
+      let customerRef = fb.customersCollection;
+      try{
+        let allCustomers = await customerRef.get();
+        state.customers = [];
+        allCustomers.forEach(doc =>{ // prosledjuje joj se callback f-ja koja ce vraitti neki item
+        const singleCustomer = doc.data(); // data je ceo objeka
+        singleCustomer["id"] = doc.id;
+        state.customers.push(singleCustomer);
+        console.log("customer " + singleCustomer)
+        })
+      }
+      catch(error){
+       console.log(error + " error")
+      }
+  },
+  async deleteCustomer({}, id){  console.log("id "  + id) 
+      try{
+        await fb.customersCollection.doc(id).delete();
+        alert('Resurs je uspešno obrisan!')           
+      }
+      catch(error){
+        console.log(error + " error")
+      }
+  },
+  async insertCustomer({commit, state}, customer){
+      const newCustomer = {
+      name: customer.name,
+      last_name: customer.last_name,
+      address: customer.address,
+      contact: customer.contact,
+      }
+      const data = await fb.customersCollection.add(newCustomer)
+  },
+  async updateCustomer({}, itemForUpdate){
+    try{
+      await fb.customersCollection.doc(itemForUpdate.id).update({
+      name: itemForUpdate.name,
+      last_name: itemForUpdate.last_name,
+      address: itemForUpdate.address,
+      contact: itemForUpdate.contact,
+      })
     }
+    catch(error){
+      console.log(error)
+    }
+  },
   }
 });

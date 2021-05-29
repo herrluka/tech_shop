@@ -16,13 +16,13 @@
           <b-nav-item href="#">Zaposleni</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav v-if="user !== null && user.role==='employee'">
-          <b-nav-item href="#">Korisnici</b-nav-item>
+          <b-nav-item href="/customers">Korisnici</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav v-if="user !== null && user.role==='employee'">
           <b-nav-item href="#">Porudžbine</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav v-if="user !== null && user.role==='employee'">
-          <b-nav-item href="#">Dostavljači</b-nav-item>
+          <b-nav-item href="/deliverers">Dostavljači</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="user">

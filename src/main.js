@@ -11,11 +11,14 @@ import 'vue-material/dist/theme/default.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {store} from "./vuex-store";
-
+import VueModal from '@kouts/vue-modal'
+import '@kouts/vue-modal/dist/vue-modal.css'
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueMaterial);
+Vue.component('Modal', VueModal) 
+
 
 library.add(faShoppingCart);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
