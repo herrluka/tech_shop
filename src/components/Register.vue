@@ -1,7 +1,6 @@
 <template>
   <div class="centered-container">
-    <md-content class="md-elevation-3">
-
+    <md-content class="md-elevation-3 max-height-80">
       <div class="title">
         <h1>Tech Shop</h1>
         <div class="md-title">Registracija</div>
@@ -19,6 +18,14 @@
         <md-field>
           <label>E-mail</label>
           <md-input v-model="form.email" type="email"></md-input>
+        </md-field>
+        <md-field>
+          <label>Adresa</label>
+          <md-input v-model="form.address" type="text"></md-input>
+        </md-field>
+        <md-field>
+          <label>Broj telefona</label>
+          <md-input v-model="form.phoneNumber" type="text"></md-input>
         </md-field>
         <md-field md-has-password>
           <label>Lozinka</label>
@@ -55,13 +62,18 @@
           surname: "",
           email: "",
           password: "",
-          repeatedPassword: ""
+          repeatedPassword: "",
+          address: "",
+          phoneNumber: "",
         }
       };
     },
     methods: {
       register() {
-        if (this.form.password !== this.form.repeatedPassword) {
+        if (this.form.name === '' || this.form.surname === '' || this.form.address === '' | this.form.phoneNumber === '') {
+          this.error = "Sva polja su obavezna";
+          return;
+        } else if (this.form.password !== this.form.repeatedPassword) {
           this.error = "Lozinke se ne poklapaju";
           return;
         } else if (this.form.password.length < 6) {
@@ -76,6 +88,8 @@
           surname: this.form.surname,
           email: this.form.email,
           password: this.form.password,
+          address: this.form.address,
+          phoneNumber: this.form.phoneNumber,
         }).catch(error => {
           if(error.code === 'auth/email-already-in-use') {
             this.error = 'E-mail adresa već postoji';
@@ -141,5 +155,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .max-height-90 {
+    max-height: 90vh;
+    overflow: auto;
   }
 </style>

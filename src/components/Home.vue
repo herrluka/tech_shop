@@ -1,15 +1,56 @@
 <template>
-  <div>
-    <h1>Welcome to home page</h1>
-    <h3>We'll be happy to see you contributing to this project</h3>
-    <b-icon-emoji-laughing class="h1"/>
+  <div class="main-content">
+    <!--    <img src="../assets/shopping-cart-background.png"/>-->
+    <div class="container">
+      <h1 class="font-weight-bold">Vaša korpa</h1>
+      <div v-for="product in productsInCart">
+        <p>{{product.productName}}</p>
+      </div>
+      <button type="button" @click="addToChart">Dodaj</button>
+      <button type="button" @click="checkState">Stampaj</button>
+      <button type="button" @click="removeFromCart">Ukoli</button>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {}
+  import {addToChart, removeFromChart} from '../utils/cart-services'
+  export default {
+    data() {
+      return {
+        productsInCart: this.$store.state.productsInCart,
+      }
+    },
+    methods: {
+      addToChart() {
+        addToChart(1,5);
+      },
+      removeFromCart() {
+        removeFromChart(1,2);
+      },
+      checkState() {
+        const productsInCart = this.$store.state.productsInCart;
+        console.log(productsInCart);
+      },
+    },
+    mounted: function() {
+      document.body.style = 'background-color: deepskyblue';
+    },
+    destroyed: function () {
+      document.body.style = 'background-color: none';
+    }
+  }
 </script>
 
 <style scoped>
 
+  .main-content {
+    padding-top: 20px;
+  }
+
+  .main-content::before {
+    content: url("../assets/shopping-cart-background.png");
+    position: absolute;
+    right: 0;
+  }
 </style>

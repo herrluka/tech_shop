@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from "./router/router";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingCart, faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
@@ -18,6 +18,9 @@ Vue.use(IconsPlugin);
 Vue.use(VueMaterial);
 
 library.add(faShoppingCart);
+library.add(faPlus);
+library.add(faMinus);
+library.add(faTrash);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 

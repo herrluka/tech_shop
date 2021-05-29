@@ -2,16 +2,21 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as fb from './firebase';
 import router from "./router/router";
+import productsMock from "./mocks/full-cart-mock"
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
     user: null,
+    productsInCart: productsMock,
   },
   mutations: {
     setUser(state, val) {
       state.user = val;
+    },
+    updateCart(state, val) {
+      state.productsInCart = val;
     }
   },
   actions: {
@@ -33,6 +38,8 @@ export const store = new Vuex.Store({
         surname: form.surname,
         email: form.email,
         password: form.password,
+        address: form.address,
+        phoneNumber: form.phoneNumber,
         role: 'customer',
       });
       dispatch('fetchUser', user);
