@@ -18,8 +18,8 @@ function isCustomer() {
 }
 
 const routes = [
-  { path: "/customers", component: Customer },
-  { path: "/deliverers", component: Deliverer },
+  { path: "/customers", component: Customer, beforeEnter: (to, from, next) => isEmployee() ? next() : next('/login')},
+  { path: "/deliverers", component: Deliverer, beforeEnter: (to, from, next) => isEmployee() ? next() : next('/login')},
   { path: '/cart', component: Cart, beforeEnter: (to, from, next) => isCustomer() ? next() : next('/login')},
   { path: '/register', component: Register},
   { path: '/login', component: Login},

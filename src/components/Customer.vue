@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button @click="openAddDialog()" class="add-button">
+  <div class="text-center my-3">  
+      <button @click="openAddDialog()" class="add-button">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -231,8 +231,11 @@ export default {
     },
     confirmDelete(id) {
       this.$store.dispatch("deleteCustomer", id);
-      this.closeDeleteDialog();
-      this.$store.dispatch("getAllCustomers");
+       const newCustomers = this.customers.filter(customer => {
+          return customer.id !== id;
+        });
+      this.$store.commit('setCustomers', newCustomers);
+      this.closeDeleteDialog()
     },
     closeAddModal() {
       this.showAddModal = false;
@@ -295,10 +298,10 @@ export default {
 
 .add-button {
   width: 20%;
-  margin-top: 20px;
-  margin-right: 40%;
   border-radius: 6px;
   background: white;
+  background-color: limegreen;
+  color: white;
 }
 .modal-wrapper {
   display: flex;

@@ -20,6 +20,9 @@ export const store = new Vuex.Store({
     setDeliverers(state, val) {
       state.deliverers = val;
     },
+     setCustomers(state, val) {
+      state.customers = val;
+    },
     updateCart(state, val) {
       state.productsInCart = val;
     }
