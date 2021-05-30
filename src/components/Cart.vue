@@ -84,7 +84,8 @@
               <span class="font-weight-bold">UKUPNO</span>
               <span class="font-weight-bold">{{totalPrice}} din.</span>
             </div>
-            <button class="btn btn-success w-75">PORUČI</button>
+            <button class="btn btn-success w-75" @click="confirmOrder">PORUČI</button>
+            <p v-if="orderConfirmError" class="text-center text-danger font-weight-bold">Neuspešno poručivanje.Pokušajte ponovo</p>
           </div>
           <div class="loader-container" v-if="loading">
             <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
@@ -96,12 +97,15 @@
 
 <script>
   import {addToChart, removeFromChart, subtractProductQuantityFromChart} from '../utils/cart-services'
+  import * as fb from '../firebase';
+  import router from "../router/router";
     export default {
         data() {
           return {
             productsInCart: this.$store.state.productsInCart,
             user: this.$store.state.user,
             loading: false,
+            orderConfirmError: false,
           }
         },
         computed: {
@@ -124,12 +128,34 @@
             removeFromChart(productId);
             this.productsInCart = this.$store.state.productsInCart;
           },
-          checkState() {
-            const productsInCart = this.$store.state.productsInCart;
-          },
           subtractOne(productId) {
             subtractProductQuantityFromChart(productId, 1);
             this.productsInCart = this.$store.state.productsInCart;
+          },
+          confirmOrder() {
+            this.loading = true;
+            this.orderConfirmError = false;
+            const user = this.$store.state.user;
+            const productInCart = this.$store.state.productsInCart;
+            const order = {
+              state: 'new',
+              user: {
+                id: user.id,
+                name: user.name,
+                surname: user.surname,
+                address: user.address,
+                phoneNumber: user.phoneNumber,
+              },
+              orderDate: new Date().toISOString(),
+              orderItems: productInCart
+            };
+            fb.ordersCollection.add(order).then(success => {
+              router.push('/my-orders');
+            }).catch(error => {
+              this.orderConfirmError = true;
+            }).finally(_ => {
+              this.loading = false;
+            });
           }
         },
         mounted: function() {
