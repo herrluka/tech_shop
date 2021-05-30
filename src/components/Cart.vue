@@ -41,7 +41,7 @@
                     <button class="btn btn-success" @click="subtractOne(product.productId)">
                       <font-awesome-icon icon="minus" class="plus-minus-icons" />
                     </button>
-                    <input type="number" class="quantity-input" :value="product.quantity" />
+                    <input type="number" class="quantity-input" :value="product.quantity" @focusout="setQuantityForProduct($event.target.value, product.productId)" />
                     <button class="btn btn-success" @click="addOneToChart(product.productId)">
                       <font-awesome-icon icon="plus" class="plus-minus-icons"/>
                     </button>
@@ -133,6 +133,18 @@
           },
           subtractOne(productId) {
             subtractProductQuantityFromChart(productId, 1);
+            this.productsInCart = this.$store.state.productsInCart;
+          },
+          setQuantityForProduct(inputValue, productId) {
+            let quantity = parseInt(inputValue) || 0;
+            quantity = quantity >= 0 ? quantity : 0;
+            const product = this.productsInCart.find(product => product.productId === productId);
+            const quantityToChange = quantity - product.quantity;
+            if (quantityToChange > 0) {
+              addToChart(productId, quantityToChange);
+            } else if (quantityToChange < 0) {
+              subtractProductQuantityFromChart(productId, (-1) * quantityToChange);
+            }
             this.productsInCart = this.$store.state.productsInCart;
           },
           confirmOrder() {
