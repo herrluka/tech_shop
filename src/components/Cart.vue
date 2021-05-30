@@ -67,8 +67,9 @@
             <h6>Izaberite dostavljača</h6>
           </div>
           <div>
-            <select class="w-100 my-3 p-1">
-              <option value="Luka">Luka</option>
+            <select id="delivererChoice" class="w-100 my-3 p-1">
+              <option value="0" selected></option>
+              <option v-for="deliverer in availableDeliverers" :value="deliverer.id">{{deliverer.companyName}}</option>
             </select>
           </div>
           <div class="text-left">
@@ -84,8 +85,8 @@
               <span class="font-weight-bold">UKUPNO</span>
               <span class="font-weight-bold">{{totalPrice}} din.</span>
             </div>
-            <button class="btn btn-success w-75" @click="confirmOrder">PORUČI</button>
-            <p v-if="orderConfirmError" class="text-center text-danger font-weight-bold">Neuspešno poručivanje.Pokušajte ponovo</p>
+            <button v-if="!serverError" class="btn btn-success w-75" @click="confirmOrder">PORUČI</button>
+            <p v-if="orderConfirmError" class="text-center text-danger font-weight-bold">{{orderConfirmError}}</p>
           </div>
           <div class="loader-container" v-if="loading">
             <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
@@ -105,7 +106,9 @@
             productsInCart: this.$store.state.productsInCart,
             user: this.$store.state.user,
             loading: false,
-            orderConfirmError: false,
+            orderConfirmError: null,
+            availableDeliverers: [],
+            serverError: false,
           }
         },
         computed: {
@@ -118,7 +121,7 @@
               price += product.price * product.quantity;
             });
             return price;
-          }
+          },
         },
         methods: {
           addOneToChart(productId) {
@@ -133,10 +136,16 @@
             this.productsInCart = this.$store.state.productsInCart;
           },
           confirmOrder() {
+            const delivererId = document.getElementById('delivererChoice').value;
+            if (delivererId === '0') {
+              this.orderConfirmError = 'Izaberite dostavljača.';
+              return;
+            }
             this.loading = true;
-            this.orderConfirmError = false;
+            this.orderConfirmError = null;
             const user = this.$store.state.user;
             const productInCart = this.$store.state.productsInCart;
+            const deliverer = this.availableDeliverers.find(deliverer => deliverer.id === delivererId);
             const order = {
               state: 'new',
               user: {
@@ -147,16 +156,33 @@
                 phoneNumber: user.phoneNumber,
               },
               orderDate: new Date().toISOString(),
-              orderItems: productInCart
+              orderItems: productInCart,
+              deliverer: deliverer,
             };
             fb.ordersCollection.add(order).then(success => {
               router.push('/my-orders');
             }).catch(error => {
-              this.orderConfirmError = true;
+              this.orderConfirmError = 'Neuspešno poručivanje. Pokušajte ponovo.';
             }).finally(_ => {
               this.loading = false;
             });
           }
+        },
+        created() {
+          let deliverers = [];
+          fb.deliverersCollection.get().then(response => {
+            response.forEach(dataObject => {
+              deliverers.push({
+                ...dataObject.data(),
+                id: dataObject.id
+              });
+            })
+          }).catch(error => {
+            this.serverError = true;
+            this.orderConfirmError = 'Neuspešno učitavanje. Osvežite stranicu.'
+          }).finally(_ => {
+            this.availableDeliverers = deliverers;
+          });
         },
         mounted: function() {
           document.body.style.backgroundColor = 'deepskyblue';
