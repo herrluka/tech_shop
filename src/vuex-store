@@ -12,6 +12,8 @@ export const store = new Vuex.Store({
     deliverers: [],
     customers: [],
     productsInCart: productsMock,
+    products:[],
+    productTypes:[]
   },
   mutations: {
     setUser(state, val) {
@@ -25,7 +27,10 @@ export const store = new Vuex.Store({
     },
     updateCart(state, val) {
       state.productsInCart = val;
-    }
+    },
+     setProducts(state,val) {
+       state.products=vale;
+     }
   },
   actions: {
     async login({dispatch}, form) {
@@ -144,5 +149,73 @@ export const store = new Vuex.Store({
       console.log(error)
     }
   },
+  async getAllProductTypes({state}){
+      let productTypeRef = fb.productTypeCollection;
+      try{
+        let allProductTypes = await productTypeRef.get();
+        state.productTypes = [];
+        allProductTypes.forEach(productType =>{
+        const singleProductType = productType.data();
+        singleProductType["id"] = productType.id;
+        state.productTypes.push(singleProductType);
+        console.log("product " + singleProductType)
+        })
+      }
+      catch(error){
+       console.log(error + " error")
+      }
+  },
+  async getAllProducts({state}){
+      let productsRef = fb.productsCollection;
+      try{
+        let allProducts = await productsRef.get();
+        state.products = [];
+        allProducts.forEach(product =>{
+        const singleProduct = product.data();
+        singleProduct["id"] = product.id;
+        state.products.push(singleProduct);
+        console.log("product " + singleProduct)
+        })
+      }
+      catch(error){
+       console.log(error + " error")
+      }
+  },
+  async deleteProduct({}, id){  console.log("id "  + id)
+      try{
+        await fb.productsCollection.doc(id).delete();
+        alert('Resurs je uspešno obrisan!')
+      }
+      catch(error){
+        console.log(error + " error")
+      }
+  },
+  async insertProduct({commit, state}, product){
+      const newProduct = {
+      name: product.name,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      productType:{
+        id:product.productType.id,
+        name:product.productType.name
+      } 
+      }
+      const data = await fb.productsCollection.add(newProduct)
+  },
+  async updateProduct({}, product){
+    try{
+      await fb.productsCollection.doc(product.id).update({
+      name: product.name,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      productType:{
+        id:product.productType.id,
+        name:product.productType.name
+      }})
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
   }
 });
