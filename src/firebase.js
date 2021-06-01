@@ -1,7 +1,7 @@
-import {firebase} from '@firebase/app';
-import 'firebase/auth';
-import 'firebase/storage';
-import 'firebase/firestore';
+import { firebase } from "@firebase/app";
+import "firebase/auth";
+import "firebase/storage";
+import "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDCgAJEGmDhCTUBz6HIGuctuGYWHhuKuqI",
@@ -17,10 +17,12 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage().ref();
 const auth = firebase.auth();
-const usersCollection = db.collection('users');
-const deliverersCollection = db.collection('deliverers');
-const customersCollection = db.collection('customers');
-const ordersCollection = db.collection('orders');
+const ordersCollection = db.collection("orders");
+const usersCollection = db.collection("users");
+const deliverersCollection = db.collection("deliverers");
+const customersCollection = db.collection("customers");
+const productsCollection = db.collection("products");
+const productTypeCollection = db.collection("productType");
 
 export {
   db,
@@ -30,4 +32,6 @@ export {
   deliverersCollection,
   customersCollection,
   ordersCollection,
-}
+  productsCollection,
+  productTypeCollection
+};

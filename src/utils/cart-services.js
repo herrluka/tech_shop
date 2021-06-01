@@ -1,4 +1,4 @@
-import {store} from "../vuex-store";
+import { store } from "../vuex-store";
 
 function addToChart(productId, quantity, productName, imageUrl, price) {
   let productsInCart = store.state.productsInCart;
@@ -15,10 +15,10 @@ function addToChart(productId, quantity, productName, imageUrl, price) {
       quantity: quantity,
       productName: productName,
       imageUrl: imageUrl,
-      price: price,
+      price: price
     });
   }
-  store.commit('updateCart', productsInCart);
+  store.commit("updateCart", productsInCart);
 }
 
 function subtractProductQuantityFromChart(productId, quantity) {
@@ -36,7 +36,7 @@ function subtractProductQuantityFromChart(productId, quantity) {
   if (productRemoved) {
     productsInCart = productsInCart.filter(product => product.quantity > 0);
   }
-  store.commit('updateCart', productsInCart);
+  store.commit("updateCart", productsInCart);
 }
 
 function removeFromChart(productId) {
@@ -44,11 +44,7 @@ function removeFromChart(productId) {
   productsInCart = productsInCart.filter(product => {
     return product.productId !== productId;
   });
-  store.commit('updateCart', productsInCart);
+  store.commit("updateCart", productsInCart);
 }
 
-export {
-  addToChart,
-  subtractProductQuantityFromChart,
-  removeFromChart,
-}
+export { addToChart, subtractProductQuantityFromChart, removeFromChart };
