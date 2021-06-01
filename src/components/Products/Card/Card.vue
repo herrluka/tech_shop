@@ -9,11 +9,11 @@
       <div class="card-body bg-light">
         <h5 class="card-title">{{product.name}}</h5>
         <p class="card-text">
-          Cena:{{product.price}}RSD<br>
+          Cena:{{product.price}} RSD<br>
           Kategorija:{{product.productType.name}}
         </p>
         <div class="d-flex justify-content-center">
-         Quantity: <input type="number" class="quantity-input" v-model="quantity" style="width:40px" />
+         Quantity: <input type="number" class="quantity-input" min="0" v-model="quantity" style="width:40px" />
         </div>
 
         <button class="btn btn-dark mt-2" style="width:100px" @click="addToCart">Buy</button><br>
@@ -26,6 +26,7 @@
 </template>
 <script>
 import {addToChart} from './../../../utils/cart-services'
+import router from "../../../router/router";
 export default {
   name:"Card",
   props:['product','showDetails'],
@@ -41,6 +42,10 @@ quantity:0}
     ,
     addToCart(e)
     {
+      if (this.$store.state.user === null){
+        router.push('/login');
+        return;
+      }
       if(this.quantity>0)
       addToChart(this.product.id,this.quantity,this.product.name,`https://firebasestorage.googleapis.com/v0/b/tech-shop-4b111.appspot.com/o/productImages%2F${this.product.imageUrl}?alt=media`,this.product.price)
     },

@@ -5,14 +5,14 @@ function addToChart(productId, quantity, productName, imageUrl, price) {
   let productFoundAndUpdated = false;
   productsInCart.forEach(product => {
     if (product.productId === productId) {
-      product.quantity += quantity;
+      product.quantity += parseInt(quantity);
       productFoundAndUpdated = true;
     }
   });
   if (!productFoundAndUpdated) {
     productsInCart.push({
       productId: productId,
-      quantity: quantity,
+      quantity: parseInt(quantity),
       productName: productName,
       imageUrl: imageUrl,
       price: price
@@ -26,7 +26,7 @@ function subtractProductQuantityFromChart(productId, quantity) {
   let productRemoved = false;
   for (let i = 0; i < productsInCart.length; i++) {
     if (productsInCart[i].productId === productId) {
-      productsInCart[i].quantity -= quantity;
+      productsInCart[i].quantity -= parseInt(quantity);
       if (productsInCart[i].quantity <= 0) {
         productRemoved = true;
       }
