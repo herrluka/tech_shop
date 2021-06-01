@@ -80,20 +80,32 @@
             :maxlength="25"
             v-model.lazy="itemForUpdate.surname"
           />
-          <p class="text">Email</p>
+          <p class="text">Adresa</p>
           <input
             class="modal-input"
             type="text"
             :maxlength="25"
-            v-model.lazy="itemForUpdate.email"
+            v-model.lazy="itemForUpdate.address"
           />
-          <p class="text">Uloga</p>
+           <p class="text">Telefon</p>
           <input
+            class="modal-input"
+            type="text"
+            :maxlength="25"
+            v-model.lazy="itemForUpdate.phoneNumber"
+          />
+        
+          <p class="text">Uloga</p>
+          <!-- <input
             class="modal-input"
             type="text"
             :maxlength="25"
             v-model.lazy="itemForUpdate.role"
-          />
+          /> -->
+        <select v-model="itemForUpdate.role" class="w-100 my-3 p-1">
+          <option value="customer">Customer</option>
+          <option value="employee">Employee</option>
+        </select>
         </div>
         <div class="delete-action-buttons">
           <button class="btn btn-primary" @click="confirmUpdate()">
@@ -134,9 +146,18 @@ export default {
           label: " Email",
           sortable: true,
         },
-        {
+         {
           key: "role",
-          label: "Uloga",
+          label: " Uloga",
+          sortable: true,
+        },
+        {
+          key: "address",
+          label: "Adresa",
+        },
+         {
+          key: "phoneNumber",
+          label: "Telefon",
         },
         {
           key: "actions",
@@ -203,8 +224,8 @@ export default {
   margin-bottom: 15px;
 }
 .table {
-  width: 60%;
-  margin-left: 20%;
+  width: 70%;
+  margin-left: 15%;
   background: white;
 }
 
