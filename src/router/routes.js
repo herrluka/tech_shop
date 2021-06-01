@@ -3,7 +3,7 @@ import PageNotFound from "../components/PageNotFound";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import Deliverer from "../components/Deliverer";
-import Customer from "../components/Customer";
+import Users from "../components/Users";
 import Products from "../components/Products/Products";
 import Cart from "../components/Cart";
 import { store } from "../vuex-store";
@@ -20,9 +20,9 @@ function isCustomer() {
 
 const routes = [
   {
-    path: "/customers",
-    component: Customer,
-    beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
+    path: "/users",
+    component: Users,
+    // beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
   },
   {
     path: "/deliverers",
