@@ -107,32 +107,20 @@ export const store = new Vuex.Store({
   async getAllUsers({state}){
       let userRef = fb.usersCollection;
       try{
-<<<<<<< HEAD
-        let allCustomers = await customerRef.get();
-        state.customers = [];
-        allCustomers.forEach(doc =>{ // prosledjuje joj se callback f-ja koja ce vraitti neki item
-        const singleCustomer = doc.data(); // data je ceo objeka
-        singleCustomer["id"] = doc.id;
-        state.customers.push(singleCustomer);
-=======
         let allUsers = await userRef.get();
         state.users = [];
         allUsers.forEach(doc =>{ // prosledjuje joj se callback f-ja koja ce vraitti neki item
         const singleUser = doc.data(); // data je ceo objeka
         singleUser["id"] = doc.id;
         state.users.push(singleUser);
->>>>>>> IT45/2017
         })
       }
       catch(error){
        console.log(error + " error")
       }
   },
-<<<<<<< HEAD
-  async deleteCustomer({}, id){
-=======
+
    async deleteUser({}, id){  console.log("id "  + id)
->>>>>>> IT45/2017
       try{
         await fb.usersCollection.doc(id).delete();
         alert('Resurs je uspešno obrisan!')

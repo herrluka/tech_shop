@@ -22,7 +22,7 @@ const routes = [
   {
     path: "/users",
     component: Users,
-    // beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
+     beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
   },
   {
     path: "/deliverers",
