@@ -66,6 +66,7 @@ export default {
   methods: {
     showDetails(product) {
       this.selectedProduct = product;
+      this.picture = `https://firebasestorage.googleapis.com/v0/b/tech-shop-4b111.appspot.com/o/productImages%2F${product.imageUrl}?alt=media`;
     },
     showImage(src) {
       this.picture = `https://firebasestorage.googleapis.com/v0/b/tech-shop-4b111.appspot.com/o/productImages%2F${src}?alt=media`;
