@@ -5,7 +5,7 @@
         Price:
         <input type="number" v-model="product.price" class="form-control" required/>
         Product Type:
-        <select @change="show" v-model="product.productType" class="form-control" required>           
+        <select v-model="product.productType" class="form-control" required>           
             <option v-for="pt in productTypes" v-bind:key="pt.id" v-bind:value="pt">{{pt.name}}</option>
         </select>
         Image:
