@@ -30,12 +30,12 @@
                 <th scope="row" class="border-0">
                   <div class="p-2 d-lg-flex d-sm-inline-block ">
                     <img :src="product.imageUrl" alt="" width="70" class="img-fluid rounded shadow-sm">
-                    <div class="ml-3 d-flex justify-content-center align-content-center">
-                      <a href="#" class="text-dark font-weight-normal text-left">{{product.productName}}</a>
+                    <div class="ml-2 d-flex flex-column justify-content-center align-content-center">
+                      <span class="text-dark font-weight-normal text-left m-0">{{product.productName}}</span>
                     </div>
                   </div>
                 </th>
-                <td class="border-0 align-middle"><strong>{{product.price}} din.</strong></td>
+                <td class="border-0 align-middle"><strong>{{product.price}} RSD</strong></td>
                 <td class="border-0 align-middle">
                   <div class="quantity-container">
                     <button class="btn btn-success" @click="subtractOne(product.productId)">
@@ -47,7 +47,7 @@
                     </button>
                   </div>
                 </td>
-                <td class="border-0 align-middle"><strong>{{product.price * product.quantity}} din.</strong></td>
+                <td class="border-0 align-middle"><strong>{{product.price * product.quantity}} RSD</strong></td>
                 <td class="border-0 align-middle">
                   <button class="btn btn-danger" @click="removeProductFromCart(product.productId)">
                     <font-awesome-icon icon="trash" class="trash-icon" />
@@ -83,9 +83,9 @@
           <div class="total-price-container">
             <div class="d-flex justify-content-between align-content-between" style="padding: 10px 12%">
               <span class="font-weight-bold">UKUPNO</span>
-              <span class="font-weight-bold">{{totalPrice}} din.</span>
+              <span class="font-weight-bold">{{totalPrice}} RSD</span>
             </div>
-            <button v-if="!serverError" class="btn btn-success w-75" @click="confirmOrder">PORUČI</button>
+            <button v-if="!serverError" class="btn btn-success w-75" @click="confirmOrder" :disabled="numberOfProducts===0">PORUČI</button>
             <p v-if="orderConfirmError" class="text-center text-danger font-weight-bold">{{orderConfirmError}}</p>
           </div>
           <div class="loader-container" v-if="loading">
@@ -240,10 +240,10 @@
   -moz-appearance: textfield;
   text-align: center;
 }
+
 .quantity-input::-webkit-outer-spin-button,
 .quantity-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  margin: 0;
 }
 
 .plus-minus-icons {
