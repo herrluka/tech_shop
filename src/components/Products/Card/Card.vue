@@ -12,11 +12,11 @@
           Cena:{{product.price}} RSD<br>
           Kategorija:{{product.productType.name}}
         </p>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" v-if="this.$store.state.user==null || this.$store.state.user.role!='employee'">
          Quantity: <input type="number" class="quantity-input" min="0" v-model="quantity" style="width:40px" />
         </div>
 
-        <button class="btn btn-dark mt-2" style="width:100px" @click="addToCart">Buy</button><br>
+        <button v-if="this.$store.state.user==null || this.$store.state.user.role!='employee'" class="btn btn-dark mt-2" style="width:100px" @click="addToCart">Buy</button><br>
         <div v-if="this.$store.state.user && this.$store.state.user.role=='employee'">
         <button class="btn btn-dark mt-2" style="width:100px" @click="removeProductHandler">Delete</button>
         <button class="btn btn-dark mt-2" style="width:100px" @click="showDetailsHandler">Update</button>
@@ -53,6 +53,7 @@ quantity:0}
     {
       this.$store.dispatch("deleteProduct",this.product.id);
       this.$store.dispatch("getAllProducts");
+      this.showDetails({});
     }
   }
 }
