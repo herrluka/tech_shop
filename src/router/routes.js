@@ -3,6 +3,7 @@ import PageNotFound from "../components/PageNotFound";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import Deliverer from "../components/Deliverer";
+import OrderEmployee from "../components/Orders/OrderEmployee";
 import Users from "../components/Users";
 import Products from "../components/Products/Products";
 import Cart from "../components/Cart";
@@ -22,7 +23,7 @@ const routes = [
   {
     path: "/users",
     component: Users,
-     beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
+    beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
   },
   {
     path: "/deliverers",
@@ -34,6 +35,12 @@ const routes = [
     component: Cart,
     beforeEnter: (to, from, next) => (isCustomer() ? next() : next("/login"))
   },
+  {
+    path: "/ordersEmployee",
+    component: OrderEmployee,
+    beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
+  },
+  // { path: "/ordersCustomer", component: OrderCustomer },
   { path: "/register", component: Register },
   { path: "/products", component: Products },
   { path: "/login", component: Login },
