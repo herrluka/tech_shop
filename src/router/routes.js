@@ -4,6 +4,7 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import Deliverer from "../components/Deliverer";
 import OrderEmployee from "../components/Orders/OrderEmployee";
+import MyOrders from "../components/Orders/MyOrders";
 import Users from "../components/Users";
 import Products from "../components/Products/Products";
 import Cart from "../components/Cart";
@@ -40,7 +41,11 @@ const routes = [
     component: OrderEmployee,
     beforeEnter: (to, from, next) => (isEmployee() ? next() : next("/login"))
   },
-  // { path: "/ordersCustomer", component: OrderCustomer },
+  {
+    path: "/myOrders",
+    component: MyOrders,
+    beforeEnter: (to, from, next) => (isCustomer() ? next() : next("/login"))
+  },
   { path: "/register", component: Register },
   { path: "/products", component: Products },
   { path: "/login", component: Login },

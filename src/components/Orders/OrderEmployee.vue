@@ -23,7 +23,9 @@
           <td class="table-cell">{{ order.user.address }}</td>
           <td class="table-cell">{{ order.deliverer.companyName }}</td>
           <td class="table-cell">{{ order.state }}</td>
-          <td class="table-cell">{{ format_date(order.orderDate) }}</td>
+          <td class="table-cell">
+            {{ order.orderDate }}
+          </td>
           <td colspan="2">
             <!-- Modifikacija -->
             <svg
@@ -92,35 +94,47 @@
     </Modal>
     <Modal v-model="showUpdateModal" modalClass="modal-wrapper">
       <h3 class="add__modal-title">Izmena porudzbine:</h3>
-      <div class="modal-content">
-        <p>Izaberi korisnika:</p>
-        <select v-model="itemForUpdate.user" :required="true">
-          <option v-for="user in users" :key="user.id" :value="user.email">{{
-            user.email
-          }}</option>
-        </select>
-        <p>Izaberi dostavljaca:</p>
-        <select v-model="itemForUpdate.deliverer" :required="true">
-          <option
-            v-for="deliverer in deliverers"
-            :key="deliverer.id"
-            :value="deliverer.companyName"
-            >{{ deliverer.companyName }}</option
+      <form @submit.prevent="confirmUpdate">
+        <div class="modal-content">
+          <p>Izaberi korisnika:</p>
+          <select v-model="itemForUpdate.user" class="form-control" required>
+            <option v-for="user in users" :key="user.id" :value="user.email">{{
+              user.email
+            }}</option>
+          </select>
+          <p>Izaberi dostavljaca:</p>
+          <select
+            v-model="itemForUpdate.deliverer"
+            class="form-control"
+            required
           >
-        </select>
-        <p>Izaberi datum porudzbine:</p>
-        <input type="datetime" v-model="itemForUpdate.orderDate" />
-        <p>Izaberi stanje porudzbine:</p>
-        <input type="text" v-model="itemForUpdate.state" />
-      </div>
-      <div class="delete-action-buttons">
-        <button class="btn btn-primary" @click="confirmUpdate">
-          Potvrdi
-        </button>
-        <button class="btn btn-danger" @click="closeUpdateModal">
-          Odustani
-        </button>
-      </div>
+            <option
+              v-for="deliverer in deliverers"
+              :key="deliverer.id"
+              :value="deliverer.companyName"
+              >{{ deliverer.companyName }}</option
+            >
+          </select>
+          <p>Izaberi datum porudzbine:</p>
+          <input type="date" v-model="itemForUpdate.orderDate" required />
+          <!-- <datepicker v-model="itemForUpdate.orderDate"></datepicker> -->
+          <p>Izaberi stanje porudzbine:</p>
+          <input
+            type="text"
+            v-model="itemForUpdate.state"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="delete-action-buttons">
+          <button class="btn btn-primary" type="submit">
+            Potvrdi
+          </button>
+          <button class="btn btn-danger" @click="closeUpdateModal">
+            Odustani
+          </button>
+        </div>
+      </form>
     </Modal>
   </div>
 </template>
@@ -129,6 +143,7 @@
 import { mapState } from "vuex";
 import OrderItems from "./OrderItems";
 import moment from "moment";
+import Datepicker from "vuejs-datepicker";
 
 export default {
   data() {
@@ -196,7 +211,8 @@ export default {
     }
   },
   components: {
-    OrderItems
+    OrderItems,
+    Datepicker
   },
   computed: {
     ...mapState(["orders", "users", "deliverers"])

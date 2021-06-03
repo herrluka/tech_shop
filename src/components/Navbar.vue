@@ -23,7 +23,7 @@
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="user">
-          <b-nav-item v-if="user.role === 'customer'" href="#"
+          <b-nav-item v-if="user.role === 'customer'" to="/myOrders"
             >Moje porudžbine</b-nav-item
           >
           <b-nav-item class="mr-3" to="/cart" v-if="user.role === 'customer'">

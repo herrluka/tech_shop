@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
     deliverers: [],
     customers: [],
     orders: [],
+    customerOrders: [],
     productsInCart: [],
     products: [],
     productTypes: []
@@ -219,7 +220,6 @@ export const store = new Vuex.Store({
           const singleOrder = doc.data();
           singleOrder["id"] = doc.id;
           state.orders.push(singleOrder);
-          console.log("order " + singleOrder);
         });
       } catch (error) {
         console.log(error + " error");
@@ -254,6 +254,22 @@ export const store = new Vuex.Store({
         });
       } catch (error) {
         console.log(error);
+      }
+    },
+    async getAllOrdersForCustomer({ state }) {
+      let ordersRef = fb.ordersCollection;
+      try {
+        let allOrders = await ordersRef.get();
+        state.customerOrders = [];
+        allOrders.forEach(doc => {
+          const singleOrder = doc.data();
+          if (singleOrder["user"]["id"] === state.user.id) {
+            singleOrder["id"] = doc.id;
+            state.customerOrders.push(singleOrder);
+          }
+        });
+      } catch (error) {
+        console.log(error + " error");
       }
     }
   }
