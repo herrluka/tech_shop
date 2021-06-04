@@ -247,6 +247,7 @@ export default {
       fb.ordersCollection
         .add(order)
         .then(success => {
+          this.$store.commit('updateCart', []);
           router.push("/myOrders");
         })
         .catch(error => {
