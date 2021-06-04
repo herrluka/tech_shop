@@ -16,14 +16,14 @@
       </thead>
       <tbody v-for="order in orders" :key="order.id">
         <tr class="table-row">
-          <td class="table-cell">
+          <td>
             {{ order.user.name + " " + order.user.surname }}
           </td>
-          <td class="table-cell">{{ order.user.phoneNumber }}</td>
-          <td class="table-cell">{{ order.user.address }}</td>
-          <td class="table-cell">{{ order.deliverer.companyName }}</td>
-          <td class="table-cell">{{ order.state }}</td>
-          <td class="table-cell">
+          <td>{{ order.user.phoneNumber }}</td>
+          <td>{{ order.user.address }}</td>
+          <td>{{ order.deliverer.companyName }}</td>
+          <td>{{ order.state }}</td>
+          <td>
             {{ order.orderDate }}
           </td>
           <td colspan="2">
@@ -97,8 +97,8 @@
       <form @submit.prevent="confirmUpdate">
         <div class="modal-content">
           <p>Izaberi korisnika:</p>
-          <select v-model="itemForUpdate.user" class="form-control" required>
-            <option v-for="user in users" :key="user.id" :value="user.email">{{
+          <select v-model="itemForUpdate.user.id" class="form-control" required>
+            <option v-for="user in users" :key="user.id" :value="user.id">{{
               user.email
             }}</option>
           </select>
@@ -111,26 +111,27 @@
             <option
               v-for="deliverer in deliverers"
               :key="deliverer.id"
-              :value="deliverer.companyName"
+              :value="deliverer"
               >{{ deliverer.companyName }}</option
             >
           </select>
           <p>Izaberi datum porudzbine:</p>
           <input type="date" v-model="itemForUpdate.orderDate" required />
-          <!-- <datepicker v-model="itemForUpdate.orderDate"></datepicker> -->
           <p>Izaberi stanje porudzbine:</p>
-          <input
-            type="text"
-            v-model="itemForUpdate.state"
-            class="form-control"
-            required
-          />
+          <select v-model="itemForUpdate.state" class="form-control" required>
+            <option value="novo">Novo</option>
+            <option value="isporuceno">Isporuceno</option>
+          </select>
         </div>
         <div class="delete-action-buttons">
           <button class="btn btn-primary" type="submit">
             Potvrdi
           </button>
-          <button class="btn btn-danger" @click="closeUpdateModal">
+          <button
+            class="btn btn-danger"
+            type="button"
+            @click="closeUpdateModal"
+          >
             Odustani
           </button>
         </div>
@@ -150,7 +151,11 @@ export default {
     return {
       itemForDelete: {},
       itemsToDisplay: [],
-      itemForUpdate: {},
+      itemForUpdate: {
+        user: {
+          id: "yzUGCDXRmJWKY6hS01JqM7AtRLB2"
+        }
+      },
       copyOfItemForUpdate: {},
       showDeleteModal: false,
       showOrderItemsModal: false,
@@ -174,13 +179,13 @@ export default {
       this.showDeleteModal = false;
     },
     confirmUpdate() {
-      let user = this.users.find(x => x.email === this.itemForUpdate.user);
+      let user = this.users.find(x => x.id === this.itemForUpdate.user.id);
       this.itemForUpdate.user = user;
 
-      let deliverer = this.deliverers.find(
-        x => x.companyName === this.itemForUpdate.deliverer
-      );
-      this.itemForUpdate.deliverer = deliverer;
+      // let deliverer = this.deliverers.find(
+      //   x => x.companyName === this.itemForUpdate.deliverer
+      // );
+      // this.itemForUpdate.deliverer = deliverer;
 
       this.$store.dispatch("updateOrder", this.itemForUpdate);
       this.showUpdateModal = false;
