@@ -232,7 +232,7 @@ export default {
         deliverer => deliverer.id === delivererId
       );
       const order = {
-        state: "new",
+        state: "novo",
         user: {
           id: user.id,
           name: user.name,
@@ -247,7 +247,7 @@ export default {
       fb.ordersCollection
         .add(order)
         .then(success => {
-          this.$store.commit('updateCart', []);
+          this.$store.commit("updateCart", []);
           router.push("/myOrders");
         })
         .catch(error => {

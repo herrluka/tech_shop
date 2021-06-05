@@ -2,7 +2,7 @@
   <div>
     <table class="table">
       <thead>
-        <tr>
+        <tr class="table-header">
           <th scope="col">Adresa dostave</th>
           <th scope="col">Dostavljac</th>
           <th scope="col">Stanje</th>
@@ -70,6 +70,9 @@ export default {
 </script>
 
 <style scoped>
+.table-header {
+  background: #e9ecef;
+}
 .table-row:hover {
   cursor: pointer;
 }

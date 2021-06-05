@@ -2,7 +2,7 @@
   <div>
     <table class="table">
       <thead>
-        <tr>
+        <tr class="table-header">
           <th scope="col">Ime korisnika</th>
           <th scope="col">Broj telefona korisnika</th>
           <th scope="col">Adresa dostave</th>
@@ -153,7 +153,7 @@ export default {
       itemsToDisplay: [],
       itemForUpdate: {
         user: {
-          id: "yzUGCDXRmJWKY6hS01JqM7AtRLB2"
+          id: "placeholderSoItDoesntCrash"
         }
       },
       copyOfItemForUpdate: {},
@@ -181,11 +181,6 @@ export default {
     confirmUpdate() {
       let user = this.users.find(x => x.id === this.itemForUpdate.user.id);
       this.itemForUpdate.user = user;
-
-      // let deliverer = this.deliverers.find(
-      //   x => x.companyName === this.itemForUpdate.deliverer
-      // );
-      // this.itemForUpdate.deliverer = deliverer;
 
       this.$store.dispatch("updateOrder", this.itemForUpdate);
       this.showUpdateModal = false;
@@ -231,11 +226,14 @@ export default {
 </script>
 
 <style scoped>
+.table-header {
+  background: #e9ecef;
+}
 .table-row:hover {
   cursor: pointer;
 }
 .items-row {
-  background: lightblue;
+  background: #e9ecef;
 }
 .text {
   font-size: 20px;
@@ -258,6 +256,7 @@ export default {
   width: 80%;
   margin-left: 10%;
   background: white;
+  margin-top: 1%;
 }
 
 .add-button {
