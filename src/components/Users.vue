@@ -49,7 +49,7 @@
       <Modal modalClass="modal-wrapper" v-model="showDeleteModal">
         <h4 class="modal-title">
           Brisanje kupca:
-          {{ itemForDelete.name + " " + itemForDelete.last_name }}
+          {{ itemForDelete.name + " " + itemForDelete.surname }}
         </h4>
         <div class="delete-action-buttons">
           <button
