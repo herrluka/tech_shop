@@ -176,15 +176,16 @@ export const store = new Vuex.Store({
         console.log(error + " error");
       }
     },
-    async deleteProduct({}, id) {
+    async deleteProduct({ dispatch }, id) {
       try {
         await fb.productsCollection.doc(id).delete();
         alert("Resurs je uspešno obrisan!");
+        dispatch("getAllProducts");
       } catch (error) {
         console.log(error + " error");
       }
     },
-    async insertProduct({ commit, state }, product) {
+    async insertProduct({ commit, state, dispatch }, product) {
       const newProduct = {
         name: product.name,
         imageUrl: product.imageUrl,
@@ -195,8 +196,9 @@ export const store = new Vuex.Store({
         }
       };
       const data = await fb.productsCollection.add(newProduct);
+      dispatch("getAllProducts");
     },
-    async updateProduct({}, product) {
+    async updateProduct({ dispatch }, product) {
       try {
         await fb.productsCollection.doc(product.id).update({
           name: product.name,
@@ -207,6 +209,7 @@ export const store = new Vuex.Store({
             name: product.productType.name
           }
         });
+        dispatch("getAllProducts");
       } catch (error) {
         console.log(error);
       }
